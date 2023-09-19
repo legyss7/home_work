@@ -116,11 +116,19 @@ class BinaryTree:
 
             # если у узла есть потомки справа и слева
             if res[0].left != None and res[0].right != None:
-                    resChildLeft = self.search(self.root, res[0].left.value)
-                    resChildRight = self.search(self.root, res[0].right.value)
-                    res[0].value = resChildLeft[0].value
-                    res[0].right = resChildRight[0]
+                # берем наименьшего потомка (он всегда с лева)
+                resChildLeft = self.search(self.root, res[0].left.value)
+                # проверяем есть ли потомок с права
+                if(resChildLeft[0].right != None):
+                    # далее идем по ветке к последнему потомку с права
+                    while resChildLeft[0].right != None:
+                        resChildLeft = self.search(self.root, resChildLeft[0].right.value)
+                    # обрываем связь выбранного потомка
+                    resChildLeft[1].right = None
+                else:
+                # res[0].right = resChildRight[0]
                     res[0].left = resChildLeft[0].left
+                res[0].value = resChildLeft[0].value
 
             print(f'узел {value} удален')
         else:
@@ -129,23 +137,31 @@ class BinaryTree:
 
 
 
-bt = BinaryTree(6)
+bt = BinaryTree(7)
 bt.add(3)
-bt.add(7)
 bt.add(2)
+bt.add(4)
 bt.add(1)
 bt.add(0)
-bt.add(4)
 bt.add(5)
+bt.add(6)
+bt.add(9)
+bt.add(10)
 bt.add(8)
 
 # bt.printTree(bt.root)
 
-print(bt.search(bt.root, 3)[0])
-print(bt.search(bt.root, 3)[1])
-bt.deleteElement(3)
-print(bt.search(bt.root, 2)[0])
-print(bt.search(bt.root, 2)[1])
+# print(bt.search(bt.root, 3)[0])
+# print(bt.search(bt.root, 3)[1])
+# bt.deleteElement(3)
+# print(bt.search(bt.root, 2)[0])
+# print(bt.search(bt.root, 2)[1])
+
+print(bt.search(bt.root, 7)[0])
+print(bt.search(bt.root, 7)[1])
+bt.deleteElement(7)
+print(bt.search(bt.root, 6)[0])
+print(bt.search(bt.root, 6)[1])
 
 # print(bt.root)
 # print(bt.search(bt.root, 9)[0])
