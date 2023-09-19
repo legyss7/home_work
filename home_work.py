@@ -95,8 +95,7 @@ class BinaryTree:
     def deleteElement(self, value):
         res = self.search(self.root, value)
         if res[0] is not None:
-
-            # если у узла нет потомков (корень не удалять)
+            # если у узла нет потомков (корень не удалять если нет потомков)
             if res[0].left == None and res[0].right == None:
                 # если у выбранного элемента есть родитель
                 if res[1] is not None:
@@ -109,25 +108,11 @@ class BinaryTree:
             
             # у узла есть один потомок слева
             if res[0].left != None and res[0].right == None:
-                # если у выбранного элемента есть родитель
-                if res[1] is not None:
-                    if value > res[1].value:
-                        res[1].right = res[0].left
-                    else: 
-                        res[1].left = res[0].left
-                else:
                     res[0].value = res[0].left.value
                     res[0].left = None
 
             # если у узла есть один потомок справа
             if res[0].left == None and res[0].right != None:
-                # если у выбранного элемента есть родитель
-                if res[1] is not None:
-                    if value > res[1].value:
-                        res[1].right = res[0].right
-                    else: 
-                        res[1].left = res[0].right
-                else:
                     res[0].value = res[0].right.value
                     res[0].right = None
 
@@ -138,7 +123,7 @@ class BinaryTree:
                     res[0].right = temp
                     res[0].left = None
 
-            # print(f'узел {value} удален')
+            print(f'узел {value} удален')
         else:
            print(f'узел {value} не найден') 
 
@@ -149,6 +134,7 @@ bt = BinaryTree(5)
 bt.add(3)
 bt.add(7)
 bt.add(2)
+# bt.add(1)
 bt.add(4)
 # bt.add(6)
 # bt.add(8)
