@@ -102,31 +102,48 @@ class BinaryTree:
                 else:
                     return print(f'узел {value} является корнем (других элементов нет)')
             
-            # у узла есть потомоки слева
+            # у узла есть потомки слева
             if res[0].left != None and res[0].right == None:
-                    resChild = self.search(self.root, res[0].left.value)
-                    res[0].value = resChild[0].value
-                    res[0].left = resChild[0].left
+                # берем потомка слева
+                resChildLeft = self.search(self.root, res[0].left.value)
+                # проверяем есть ли у выбранного узла потомок справа
+                if(resChildLeft[0].right != None):
+                    # далее идем по ветке к последнему потомку справа
+                    while resChildLeft[0].right != None:
+                        resChildLeft = self.search(self.root, resChildLeft[0].right.value)
+                    # обрываем связь выбранного потомка с его родителем
+                    resChildLeft[1].right = None
+                else:
+                    res[0].left = resChildLeft[0].left
+                res[0].value = resChildLeft[0].value
 
-            # если у узла есть потомоки справа
+            # если у узла есть потомки справа
             if res[0].left == None and res[0].right != None:
-                    resChild = self.search(self.root, res[0].right.value)
-                    res[0].value = resChild[0].value
-                    res[0].right = resChild[0].right
+               # берем потомка справа
+                resChildLeft = self.search(self.root, res[0].right.value)
+                # проверяем есть ли у выбранного узла потомок слева
+                if(resChildLeft[0].left != None):
+                    # далее идем по ветке к последнему потомку слева
+                    while resChildLeft[0].left != None:
+                        resChildLeft = self.search(self.root, resChildLeft[0].left.value)
+                    # обрываем связь выбранного потомка с его родителем
+                    resChildLeft[1].left = None
+                else:
+                    res[0].right = resChildLeft[0].right
+                res[0].value = resChildLeft[0].value
 
             # если у узла есть потомки справа и слева
             if res[0].left != None and res[0].right != None:
-                # берем наименьшего потомка (он всегда с лева)
+                # берем наименьшего потомка (он всегда слева)
                 resChildLeft = self.search(self.root, res[0].left.value)
-                # проверяем есть ли потомок с права
+                # проверяем есть ли у выбранного узла потомок справа
                 if(resChildLeft[0].right != None):
-                    # далее идем по ветке к последнему потомку с права
+                    # далее идем по ветке к последнему потомку справа
                     while resChildLeft[0].right != None:
                         resChildLeft = self.search(self.root, resChildLeft[0].right.value)
-                    # обрываем связь выбранного потомка
+                    # обрываем связь выбранного потомка с его родителем
                     resChildLeft[1].right = None
                 else:
-                # res[0].right = resChildRight[0]
                     res[0].left = resChildLeft[0].left
                 res[0].value = resChildLeft[0].value
 
@@ -146,10 +163,9 @@ bt.add(0)
 bt.add(5)
 bt.add(6)
 bt.add(9)
-bt.add(10)
 bt.add(8)
+bt.add(10)
 
-# bt.printTree(bt.root)
 
 # print(bt.search(bt.root, 3)[0])
 # print(bt.search(bt.root, 3)[1])
@@ -162,6 +178,11 @@ print(bt.search(bt.root, 7)[1])
 bt.deleteElement(7)
 print(bt.search(bt.root, 6)[0])
 print(bt.search(bt.root, 6)[1])
+
+
+# 
+# 
+# bt.printTree(bt.root)
 
 # print(bt.root)
 # print(bt.search(bt.root, 9)[0])
