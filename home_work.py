@@ -133,7 +133,6 @@ class BinaryTree:
 
             # если у узла есть по одному потомку справа и слева
             if res[0].left != None and res[0].right != None:
-                # если у выбранного элемента есть родитель
                     temp = res[0].right
                     res[0].value = res[0].left.value
                     res[0].right = temp
