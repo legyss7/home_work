@@ -78,8 +78,8 @@ class BinaryTree:
         
     def printTree(self, node):
         if node:
-            print(node.value)
             self.printTree(node.left)
+            print(node.value)
             self.printTree(node.right)
 
 
@@ -139,7 +139,7 @@ bt.add(4)
 bt.add(5)
 bt.add(8)
 
-
+# bt.printTree(bt.root)
 
 print(bt.search(bt.root, 3)[0])
 print(bt.search(bt.root, 3)[1])
@@ -153,6 +153,6 @@ print(bt.search(bt.root, 2)[1])
 # print(bt.root.right)
 
 
-# bt.printTree(bt.root)
+
 
 # print(bt.countNode(bt.root))
