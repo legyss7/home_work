@@ -49,12 +49,8 @@ class BinaryTree:
         Подсчет количества узлов дерева
     
     deleteElement()
-        Удаление узла дерева (с учетом, что у узла будет не более двух потомков, 
-        один справа другой слева и есть родитель)
-        (В противном случае нужно где-то хранить всех потомков удаляемого узла или 
-        делать рекурсию, пока не знаю как...)
+        Удаление узла дерева 
 
-    
     """
 
     def __init__(self, root_value):
@@ -106,22 +102,25 @@ class BinaryTree:
                 else:
                     return print(f'узел {value} является корнем (других элементов нет)')
             
-            # у узла есть один потомок слева
+            # у узла есть потомоки слева
             if res[0].left != None and res[0].right == None:
-                    res[0].value = res[0].left.value
-                    res[0].left = None
+                    resChild = self.search(self.root, res[0].left.value)
+                    res[0].value = resChild[0].value
+                    res[0].left = resChild[0].left
 
-            # если у узла есть один потомок справа
+            # если у узла есть потомоки справа
             if res[0].left == None and res[0].right != None:
-                    res[0].value = res[0].right.value
-                    res[0].right = None
+                    resChild = self.search(self.root, res[0].right.value)
+                    res[0].value = resChild[0].value
+                    res[0].right = resChild[0].right
 
-            # если у узла есть по одному потомку справа и слева
+            # если у узла есть потомки справа и слева
             if res[0].left != None and res[0].right != None:
-                    temp = res[0].right
-                    res[0].value = res[0].left.value
-                    res[0].right = temp
-                    res[0].left = None
+                    resChildLeft = self.search(self.root, res[0].left.value)
+                    resChildRight = self.search(self.root, res[0].right.value)
+                    res[0].value = resChildLeft[0].value
+                    res[0].right = resChildRight[0]
+                    res[0].left = resChildLeft[0].left
 
             print(f'узел {value} удален')
         else:
@@ -130,14 +129,15 @@ class BinaryTree:
 
 
 
-bt = BinaryTree(5)
+bt = BinaryTree(6)
 bt.add(3)
 bt.add(7)
 bt.add(2)
-# bt.add(1)
+bt.add(1)
+bt.add(0)
 bt.add(4)
-# bt.add(6)
-# bt.add(8)
+bt.add(5)
+bt.add(8)
 
 
 
