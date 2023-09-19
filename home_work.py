@@ -83,7 +83,7 @@ class BinaryTree:
             self.printTree(node.left)
             self.printTree(node.right)
 
-     # подсчет количества узлов дерева
+
     def countNode(self, node):
         if node == None:
             return 0
