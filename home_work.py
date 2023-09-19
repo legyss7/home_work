@@ -24,6 +24,7 @@ class Node:
         if self.right:
             res += f' значение правого: {self.right.value}'
         return res
+    
 
 
 class BinaryTree:
@@ -93,40 +94,54 @@ class BinaryTree:
 
     def deleteElement(self, value):
         res = self.search(self.root, value)
-        childLeft = res[0].left
-        childRight = res[0].right
-        parent = res[1].value
-        if res[0] is None:
-            print("нет такого узла")
-        else:
-            # если у узла нет потомков
-            if childLeft == None and childRight == None:
-                if value > parent:
-                    res[1].right = None
-                else: 
-                    res[1].left = None
+        if res[0] is not None:
+
+            # если у узла нет потомков (корень не удалять)
+            if res[0].left == None and res[0].right == None:
+                # если у выбранного элемента есть родитель
+                if res[1] is not None:
+                    if value > res[1].value:
+                        res[1].right = None
+                    else: 
+                        res[1].left = None
+                else:
+                    return print(f'узел {value} является корнем (других элементов нет)')
+            
             # у узла есть один потомок слева
-            if childLeft != None and childRight == None:
-                if value > parent:
-                    res[1].right = childLeft
-                else: 
-                    res[1].left = childLeft
+            if res[0].left != None and res[0].right == None:
+                # если у выбранного элемента есть родитель
+                if res[1] is not None:
+                    if value > res[1].value:
+                        res[1].right = res[0].left
+                    else: 
+                        res[1].left = res[0].left
+                else:
+                    res[0].value = res[0].left.value
+                    res[0].left = None
+
             # если у узла есть один потомок справа
-            if childLeft == None and childRight != None:
-                if value > parent:
-                    res[1].right = childRight
-                else: 
-                    res[1].left = childRight
+            if res[0].left == None and res[0].right != None:
+                # если у выбранного элемента есть родитель
+                if res[1] is not None:
+                    if value > res[1].value:
+                        res[1].right = res[0].right
+                    else: 
+                        res[1].left = res[0].right
+                else:
+                    res[0].value = res[0].right.value
+                    res[0].right = None
+
             # если у узла есть по одному потомку справа и слева
-            if childLeft != None and childRight != None:
-                if value > parent:
-                    res[1].right = childLeft
-                else: 
-                    res[1].left = childLeft
-                res = self.search(self.root, res[0].value)
-                res[1].right = childRight
-               
-            print(f'узел {value} удален')
+            if res[0].left != None and res[0].right != None:
+                # если у выбранного элемента есть родитель
+                    temp = res[0].right
+                    res[0].value = res[0].left.value
+                    res[0].right = temp
+                    res[0].left = None
+
+            # print(f'узел {value} удален')
+        else:
+           print(f'узел {value} не найден') 
 
 
 
@@ -136,8 +151,10 @@ bt.add(3)
 bt.add(7)
 bt.add(2)
 bt.add(4)
-bt.add(6)
-bt.add(8)
+# bt.add(6)
+# bt.add(8)
+
+
 
 print(bt.search(bt.root, 3)[0])
 print(bt.search(bt.root, 3)[1])
